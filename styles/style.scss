@@ -1,0 +1,160 @@
+@import "null";
+html {
+  overflow-x: hidden;
+}
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  color: #212529;
+}
+.links {
+  a {
+    color: #0056b3;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+a {
+  color: white;
+}
+input {
+  font-family: "Roboto", sans-serif;
+  padding-left: 20px;
+}
+textarea {
+  font-family: "Roboto", sans-serif;
+  padding: 20px;
+  padding-left: 20px;
+  resize: none;
+}
+button {
+  font-family: "Roboto", sans-serif;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.orange_button {
+  background: #ff8a00;
+  color: white;
+  border: 1px solid #bfbfbf;
+  text-align: center;
+  height: 76px;
+  line-height: 76px;
+  text-transform: uppercase;
+  font-size: 30px;
+  border-radius: 200px;
+  font-weight: bold;
+  min-width: 350px;
+  padding: 0 45px;
+  @media (max-width: 1100px) {
+    font-size: 20px;
+    padding: 12px 45px;
+    line-height: 48px;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.main-content {
+  opacity: 0;
+
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 300ms ease-in-out;
+  }
+} /* Фиксируем размеры контейнеров с изображениями */
+img[src] {
+  background: transparent !important;
+}
+
+/* Предотвращаем скачки контента */
+.image-container {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Для картинок, у которых могут быть скачки */
+.managed-image-wrapper {
+  display: block;
+  overflow: hidden;
+  line-height: 0; /* Убирает лишнее пространство снизу */
+}
+
+.managed-image-wrapper img {
+  width: 100%;
+  height: auto;
+}
+.logo__cont {
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  transition: 300ms ease all;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 371px;
+  width: 500px;
+  z-index: 1;
+  @media (max-width: 1100px) {
+    display: none;
+  }
+}
+.logo__spin {
+  width: 117px;
+  height: 117px;
+  left: 60.5%;
+  position: absolute;
+  z-index: 1;
+}
+.spin__animation {
+  animation: spin 700ms infinite linear;
+}
+@keyframes spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+.preloader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  z-index: 9999;
+  opacity: 1;
+  visibility: visible;
+  &:not(.showing) {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

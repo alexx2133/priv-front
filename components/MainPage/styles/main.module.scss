@@ -1,0 +1,24 @@
+.main_page {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @media (max-width:1100px) {
+    // padding-top: 257px;
+  }
+}
+.second_part {
+  background-image: url("../../../public/background/bg-specifications.png");
+  background-color: white;
+  background-repeat: repeat;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.margin {
+  border-bottom: 1px solid rgba(0,0,0, 0.25);
+  width: 100%;
+}

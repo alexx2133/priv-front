@@ -1,0 +1,151 @@
+/* wrapper centers table and adds responsiveness */
+.wrapper {
+  width: 100%;
+  max-width: 1450px;
+  margin: 40px auto    
+}
+
+/* allow horizontal scroll on small screens */
+
+/* Base table reset */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px; /* keeps layout like desktop unless shrunk */
+}
+
+/* HEADER styles */
+.table thead th {
+  text-align: center;
+  padding: 12px 14px;
+  font-weight: 700;
+  color: #6b6b6b;
+  font-size: 18px;
+  td {
+    padding: 14px;
+    vertical-align: middle;
+    border-bottom: 8px solid transparent; /* creates gap like on screenshot */
+  }
+}
+
+/* first header cell bigger */
+.colName {
+  width: 46%;
+  font-size: 20px;
+  color: #6b6b6b;
+  text-align: left !important;
+}
+
+/* composite headings for OPT/ROZ */
+.colOptTitle,
+.colRoznTitle {
+  width: 13%;
+  vertical-align: bottom;
+  background: transparent;
+  padding-bottom: 6px;
+}
+
+/* orange label style */
+.optHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.orange {
+  color: #ff8a00;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+/* smaller subheader row for units labels */
+.headerUnitsRow th {
+  padding: 6px 10px;
+  color: #8a8a8a;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* small unit cell */
+.unitCell {
+  width: 8%;
+  text-align: center;
+}
+
+/* body rows */
+
+/* alternate row backgrounds (light green) */
+.rowEven {
+  background: #f0f7ef;
+}
+.rowOdd {
+  background: white;
+}
+
+/* name cell */
+.nameCell {
+  padding-left: 18px;
+}
+
+/* product name styling (green, bold) */
+.productName {
+  color: #1b8b3a;
+  font-weight: bold;
+  font-size: 30px;
+  display: inline-block;
+}
+
+/* numeric cells (big) */
+.number {
+  text-align: center;
+  font-size: 36px;
+  font-weight: normal;
+  color: #2e2e2e;
+  padding: 18px 12px;
+  min-width: 80px;
+}
+
+/* unit / small text */
+.unit {
+  text-align: center;
+  font-weight: normal;
+  color: #3e3e3e;
+  font-size: 28px;
+  padding: 12px;
+  min-width: 48px;
+}
+
+/* responsive: for narrower screens collapse to cards */
+@media (max-width: 900px) {
+  .table {
+    min-width: 600px;
+  }
+}
+
+/* Mobile: transform into vertical cards for very small screens */
+@media (max-width: 520px) {
+  .table {
+    border: 0;
+    thead {
+      display: none;
+    }
+    tr {
+      display: block;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+    td {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 12px;
+    }
+  }
+
+  .productName {
+    font-size: 18px;
+  }
+  .number {
+    font-size: 20px;
+  }
+}

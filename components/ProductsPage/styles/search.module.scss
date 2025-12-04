@@ -1,0 +1,43 @@
+.select__wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  font-family: inherit;
+}
+
+.select__input {
+  width: 280px;
+  padding: 10px 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 20px;
+  outline: none;
+  border-radius: 100px;
+  transition: border 0.2s;
+  &:focus {
+    border-color: #0070f3;
+  }
+}
+
+.select__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+}
+
+.select__option {
+  padding: 8px 12px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  &:hover {
+    background: #f2f2f2;
+  }
+}

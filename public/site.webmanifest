@@ -1,0 +1,21 @@
+{
+  "name": "Крымский Привоз - оптовый рынок",
+  "short_name": "Крымский Привоз",
+  "description": "Официальный сайт оптового рынка Крымский Привоз в Симферополе",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/small_logo.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/small_logo.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+.about__mapWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1480px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.about__mapControls {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+
+  button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    background: #ff8a00;
+    color: white;
+    font-weight: 900;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 32px;
+    line-height: 33px;
+    transition: 0.2s;
+
+    &:hover {
+      background: #e67c00;
+    }
+  }
+}
+
+.about__mapContainer {
+  width: 100%;
+  height: auto;
+  max-height: 1020px;
+  aspect-ratio: 1450 / 1020;
+  // background: #f8f8f8;
+  cursor: grab;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  margin-top: 75px;
+  &:active {
+    cursor: grabbing;
+  }
+  @media (max-width: 768px) {
+    aspect-ratio: 1 / 1.3;
+  }
+}
