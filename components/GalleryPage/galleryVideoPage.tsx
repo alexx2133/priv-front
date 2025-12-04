@@ -35,10 +35,6 @@ const GalleryVideoPage = () => {
         ]}
       />
       <div className={style.news__info} ref={fancyboxRef}>
-        {/* <Title image={"../../gallery/calendar.png"} title={"Лето 2022"} /> */}
-        {/* <div className={gallery.gallery} ref={fancyboxRef}>
-          <GalleryBlockVideo />
-        </div> */}
         {allVideoAlbums.map((album) => (
           <div key={album.id} className="album-section">
             <Title image={"../../gallery/calendar.png"} title={album.name} />
