@@ -31,6 +31,7 @@ interface ComparisonData {
 export const CompareTable: React.FC<CompareTableProps> = ({
   selectedItems,
   dateFrom,
+  period,
   dateTo,
   priceField,
   apiBase,
@@ -79,6 +80,7 @@ export const CompareTable: React.FC<CompareTableProps> = ({
           items: selectedItems,
           date1: dateFrom,
           date2: dateTo,
+          period: period,
           price_field: priceField,
         };
 
@@ -182,8 +184,11 @@ export const CompareTable: React.FC<CompareTableProps> = ({
 
   return (
     <div className={styles.compareTable}>
-      <div className={styles.tableHeader}>Сравнение цен за период {formatDate(displayDateFrom as string)} → {formatDate(displayDateTo)}</div>
-      
+      <div className={styles.tableHeader}>
+        Сравнение цен за период {formatDate(displayDateFrom as string)} →{" "}
+        {formatDate(displayDateTo)}
+      </div>
+
       {/* <div className={styles.tableHeader}>
         <h3>Сравнение цен за период</h3>
         <div className={styles.dates}>

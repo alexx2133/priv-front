@@ -34,7 +34,7 @@
   transition: transform 0.3s ease;
   color: #555;
   user-select: none;
-  z-index: 10;
+  z-index: 1;
   font-size: 20px;
 }
 .arrow.up {
@@ -46,6 +46,7 @@
   top: calc(100% + 4px);
   left: 0;
   right: 0;
+  z-index: 999;
   max-height: 220px;
   overflow-y: auto;
   background: #fff;

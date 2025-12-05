@@ -79,7 +79,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
     d.setFullYear(d.getFullYear() - 1);
     return d.toISOString().slice(0, 10);
   });
-  
+
   const [openTo, setOpenTo] = useState(false);
   const [openFrom, setOpenFrom] = useState(false);
   const [dateTo, setDateTo] = useState<string>(() =>
@@ -285,7 +285,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
             </div>
 
             <div className={styles.panelCol}>
-              {title === "Динамика" && (
+              {
                 <>
                   <h3>Интервал времени</h3>
                   <div className={styles.row}>
@@ -310,7 +310,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
                     />
                   </div>
                 </>
-              )}
+              }
 
               <h3>Период</h3>
               <div className={`${styles.row} ${styles.period}`}>
@@ -326,7 +326,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
                     onFocus={() => setOpenFrom(true)}
                     onBlur={() => setOpenFrom(false)}
                     maxDate={new Date(Date.now())}
-                    dateFormat={"dd.MM.YYYY"}
+                    dateFormat={"dd.MM.yyyy"}
                     className={styles.datepicker__input}
                     onChange={(date) =>
                       setDateFrom(formatDateToYYYYMMDD(date as Date))
@@ -334,7 +334,11 @@ const Analytics: React.FC<AnalyticsProps> = ({
                   />
                   <span
                     className={`${select.arrow} ${openFrom ? select.up : ""}`}
-                    style={{ marginLeft: "-40px", marginRight: "20px", pointerEvents: "none" }}
+                    style={{
+                      marginLeft: "-40px",
+                      marginRight: "20px",
+                      pointerEvents: "none",
+                    }}
                   >
                     ▼
                   </span>
@@ -352,14 +356,18 @@ const Analytics: React.FC<AnalyticsProps> = ({
                     onFocus={() => setOpenTo(true)}
                     onBlur={() => setOpenTo(false)}
                     maxDate={new Date(Date.now())}
-                    dateFormat={"dd.MM.YYYY"}
+                    dateFormat={"dd.MM.yyyy"}
                     onChange={(date) =>
                       setDateTo(formatDateToYYYYMMDD(date as Date))
                     }
                   />
                   <span
                     className={`${select.arrow} ${openTo ? select.up : ""}`}
-                    style={{ marginLeft: "-40px", marginRight: "20px", pointerEvents: "none" }}
+                    style={{
+                      marginLeft: "-40px",
+                      marginRight: "20px",
+                      pointerEvents: "none",
+                    }}
                   >
                     ▼
                   </span>
