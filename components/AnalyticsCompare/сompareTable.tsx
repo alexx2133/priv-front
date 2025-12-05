@@ -41,7 +41,7 @@ export const CompareTable: React.FC<CompareTableProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
   const [searchParams, setSearchParams] = useState<{
-    dateFrom: string;
+    dateFrom: string | Date;
     dateTo: string;
     selectedItems: Item[];
   } | null>(null);
@@ -182,7 +182,7 @@ export const CompareTable: React.FC<CompareTableProps> = ({
 
   return (
     <div className={styles.compareTable}>
-      <div className={styles.tableHeader}>Сравнение цен за период {formatDate(displayDateFrom)} → {formatDate(displayDateTo)}</div>
+      <div className={styles.tableHeader}>Сравнение цен за период {formatDate(displayDateFrom as string)} → {formatDate(displayDateTo)}</div>
       
       {/* <div className={styles.tableHeader}>
         <h3>Сравнение цен за период</h3>
@@ -196,7 +196,7 @@ export const CompareTable: React.FC<CompareTableProps> = ({
             <tr>
               <th className={styles.nameHeader}>НАИМЕНОВАНИЕ</th>
               <th className={styles.priceHeader}>
-                {formatDate(displayDateFrom)}
+                {formatDate(displayDateFrom as string)}
               </th>
               <th className={styles.priceHeader}>
                 {formatDate(displayDateTo)}

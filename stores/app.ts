@@ -58,16 +58,16 @@ export const useAppStore = create<AppState>((set, get) => ({
   loadBanners: async (group_id: number) => {
     const state = get();
     if (state.mainBanners.loaded && group_id === 1) return;
-    if (state.sellerBanners.loaded && group_id === 2) return;
-    if (state.customerBanners.loaded && group_id === 3) return;
+    if (state.customerBanners.loaded && group_id === 2) return;
+    if (state.sellerBanners.loaded && group_id === 3) return;
     try {
       const data = await bannersService.getActive(group_id);
       if (group_id === 1) {
         set({ mainBanners: { data: data.banners, loaded: true } });
       } else if (group_id === 2) {
-        set({ sellerBanners: { data: data.banners, loaded: true } });
-      } else if (group_id === 3) {
         set({ customerBanners: { data: data.banners, loaded: true } });
+      } else if (group_id === 3) {
+        set({ sellerBanners: { data: data.banners, loaded: true } });
       }
     } catch (error) {
       console.error("Error loading banners:", error);

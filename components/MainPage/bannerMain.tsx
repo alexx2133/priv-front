@@ -23,6 +23,7 @@ const info: IInfo[] = [
     image: "/main_page/card-3.png",
     link: { to: "/customers", title: "Покупателям" },
     descr: ["Тарифы", "Документы"],
+    center: true,
   },
 ];
 const BannerMain = () => {
@@ -62,18 +63,32 @@ const BannerMain = () => {
         />
       </div>
       <div className={style.banner__bg_images}>
-        <ProgressiveImage
-          alt="left"
-          width={793}
-          height={791}
-          src={getSettingsUrl(settings.data.headers_home_left?.data)}
-        />
-        <ProgressiveImage
-          alt="right"
-          width={793}
-          height={791}
-          src={getSettingsUrl(settings.data.headers_home_right?.data)}
-        />
+        <div
+          style={{
+            marginLeft: settings.data.headers_home_left_x?.data + "px",
+            marginTop: settings.data.headers_home_left_y?.data + "px",
+          }}
+        >
+          <ProgressiveImage
+            alt="left"
+            width={793}
+            height={791}
+            src={getSettingsUrl(settings.data.headers_home_left?.data)}
+          />
+        </div>
+        <div
+          style={{
+            marginRight: settings.data.headers_home_right_x?.data + "px",
+            marginTop: settings.data.headers_home_right_y?.data + "px",
+          }}
+        >
+          <ProgressiveImage
+            alt="right"
+            width={793}
+            height={791}
+            src={getSettingsUrl(settings.data.headers_home_right?.data)}
+          />
+        </div>
       </div>
       <Slider slides={mainBanners.data} />
       <div className={style.banner__info}>

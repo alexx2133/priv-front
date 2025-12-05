@@ -5,6 +5,7 @@ export interface IInfo {
   image: string;
   link: { to: string; title: string };
   descr: string[];
+  center?: boolean;
 }
 
 const Info = ({ info }: { info: IInfo[] }) => {
@@ -12,7 +13,11 @@ const Info = ({ info }: { info: IInfo[] }) => {
     <div className={style.info}>
       {info.map((el, i) => (
         <div className={style.info__block} key={i}>
-          <img src={el.image} alt={el.link.to} />
+          <img
+            src={el.image}
+            alt={el.link.to}
+            className={el?.center ? style.center : ""}
+          />
           <Link href={el.link.to} className={style.info__link}>
             <button>{el.link.title}</button>
           </Link>

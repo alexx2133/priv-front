@@ -62,16 +62,18 @@ const GalleryPage = () => {
         ]}
       />
       <div className={style.news__info} ref={fancyboxRef}>
-        {visibleAlbums.map((album) => (
-          <div key={album.id} className="album-section">
-            <Title image={"gallery/calendar.png"} title={album.name} />
-            <div className={gallery.gallery}>
-              {album.photos.map((photo, i) => (
-                <GalleryBlock photo={photo} key={i} />
-              ))}
+        {visibleAlbums
+          .sort((a, b) => a.sort - b.sort)
+          .map((album) => (
+            <div key={album.id} className="album-section">
+              <Title image={"gallery/calendar.png"} title={album.name} />
+              <div className={gallery.gallery}>
+                {album.photos.map((photo, i) => (
+                  <GalleryBlock photo={photo} key={i} />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

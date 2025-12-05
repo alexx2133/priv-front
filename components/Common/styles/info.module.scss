@@ -21,7 +21,12 @@
     width: 332px;
     object-fit: contain;
   }
-
+  .center {
+    transform: translateX(-50px);
+    @media (max-width: 1100px) {
+      transform: translateX(-30px) translateY(-20px);
+    }
+  }
   .info__link {
     width: 100%;
     display: flex;

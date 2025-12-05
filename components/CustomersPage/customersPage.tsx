@@ -51,7 +51,7 @@ export interface IRent {
 const CustomersPage = () => {
   const { loadBanners, customerBanners, settings } = useAppStore();
   useEffect(() => {
-    loadBanners(3);
+    loadBanners(2);
   }, []);
   return (
     <div className={style.sellers}>

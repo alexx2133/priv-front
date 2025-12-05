@@ -125,7 +125,7 @@ const rentAvailable2: IRent[] = [
 const SellersPage = () => {
   const { loadBanners, sellerBanners, settings } = useAppStore();
   useEffect(() => {
-    loadBanners(2);
+    loadBanners(3);
   }, []);
   return (
     <div className={style.sellers}>

@@ -3,12 +3,18 @@ import React, { useEffect, useMemo, useState } from "react";
 import styles from "./styles/analytics.module.scss";
 import { useProductsStore } from "../../stores/productsStore";
 import { useAppStore } from "../../stores/app";
-import { Item } from "./chartPanel";
+import { formatDateToYYYYMMDD, Item } from "./chartPanel";
 import { API_URL } from "../../utils/api/config";
 import Banner from "../Common/banner";
 import Title from "../Common/title";
 import CategorySelect from "../ProductsPage/categorySelect";
-
+import DatePicker from "react-datepicker";
+import select from "../ProductsPage/styles/select.module.scss";
+import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { ru } from "date-fns/locale/ru";
+registerLocale("ru-RU", ru);
+setDefaultLocale("ru-RU");
 export const formatDate = (dateString: string): string => {
   if (!dateString) return "";
   const date = new Date(dateString);
@@ -34,8 +40,8 @@ interface AnalyticsProps {
 // Пропсы которые получают все компоненты визуализации
 export interface VisualizationProps {
   selectedItems: Item[];
-  dateFrom: string;
-  dateTo: string;
+  dateFrom: string | Date;
+  dateTo: string | Date;
   period: "day" | "month" | "year";
   priceField:
     | "opt_price_min"
@@ -73,7 +79,9 @@ const Analytics: React.FC<AnalyticsProps> = ({
     d.setFullYear(d.getFullYear() - 1);
     return d.toISOString().slice(0, 10);
   });
-
+  
+  const [openTo, setOpenTo] = useState(false);
+  const [openFrom, setOpenFrom] = useState(false);
   const [dateTo, setDateTo] = useState<string>(() =>
     new Date().toISOString().slice(0, 10)
   );
@@ -116,6 +124,13 @@ const Analytics: React.FC<AnalyticsProps> = ({
       (s) => s.type === "category" && s.id === selectedCategoryId
     );
     if (exists) return;
+    if (selectedCategoryId === 9999) {
+      setSelectedItems((s) => [
+        ...s,
+        { type: "category", id: selectedCategoryId, label: "Все категории" },
+      ]);
+      return;
+    }
     const cat = categoryOptions.find(
       (c: any) => c.id === selectedCategoryId
     ) as any;
@@ -246,6 +261,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
                   placeholder="Выберите категорию"
                   options={[
                     { id: null, name: "Выберите категорию" },
+                    { id: 9999, name: "Вce категории" },
                     ...categoryOptions.slice(0, -3),
                   ]}
                   onSelect={(n) => {
@@ -300,19 +316,53 @@ const Analytics: React.FC<AnalyticsProps> = ({
               <div className={`${styles.row} ${styles.period}`}>
                 <div className={styles.datepicker}>
                   <label>с</label>
-                  <input
+                  {/* <input
                     type="date"
                     value={dateFrom}
                     onChange={(e) => setDateFrom(e.target.value)}
+                  /> */}
+                  <DatePicker
+                    selected={new Date(dateFrom)}
+                    onFocus={() => setOpenFrom(true)}
+                    onBlur={() => setOpenFrom(false)}
+                    maxDate={new Date(Date.now())}
+                    dateFormat={"dd.MM.YYYY"}
+                    className={styles.datepicker__input}
+                    onChange={(date) =>
+                      setDateFrom(formatDateToYYYYMMDD(date as Date))
+                    }
                   />
+                  <span
+                    className={`${select.arrow} ${openFrom ? select.up : ""}`}
+                    style={{ marginLeft: "-40px", marginRight: "20px", pointerEvents: "none" }}
+                  >
+                    ▼
+                  </span>
                 </div>
                 <div className={styles.datepicker}>
                   <label>по</label>
-                  <input
+                  {/* <input
                     type="date"
                     value={dateTo}
                     onChange={(e) => setDateTo(e.target.value)}
+                  /> */}
+                  <DatePicker
+                    selected={new Date(dateTo)}
+                    className={styles.datepicker__input}
+                    onFocus={() => setOpenTo(true)}
+                    onBlur={() => setOpenTo(false)}
+                    maxDate={new Date(Date.now())}
+                    dateFormat={"dd.MM.YYYY"}
+                    onChange={(date) =>
+                      setDateTo(formatDateToYYYYMMDD(date as Date))
+                    }
                   />
+                  <span
+                    className={`${select.arrow} ${openTo ? select.up : ""}`}
+                    style={{ marginLeft: "-40px", marginRight: "20px", pointerEvents: "none" }}
+                  >
+                    ▼
+                  </span>
                 </div>
               </div>
             </div>
@@ -331,6 +381,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
                   placeholder="Минимум"
                   options={[
                     { id: "min", name: "Минимум" },
+                    { id: "avg", name: "Средняя" },
                     { id: "max", name: "Максимум" },
                   ]}
                   onSelect={(per) => {

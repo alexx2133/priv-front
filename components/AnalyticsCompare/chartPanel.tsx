@@ -26,10 +26,20 @@ ChartJS.register(
 );
 
 export const formatDateDisplay = (dateStr: string): string => {
+  console.log(dateStr);
   const [year, month, day] = dateStr.split("-");
   return `${day}.${month}.${year}`;
 };
+export const formatDateToYYYYMMDD = (date: Date | string | null) => {
+  if (typeof date === "string") return date;
+  if (!date) return "";
 
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // месяцы начинаются с 0
+  const year = date.getFullYear();
+
+  return `${year}-${month}-${day}`;
+};
 export type Item = { productId?: number; categoryId?: number };
 type Series = {
   type: "product" | "category";
@@ -42,8 +52,8 @@ const COLORS = ["#9b59b6", "#4db6e6", "#2ecc71", "#d08770"];
 
 interface Props {
   selectedItems: Item[];
-  dateFrom: string;
-  dateTo: string;
+  dateFrom: string | Date;
+  dateTo: string | Date;
   period?: "day" | "month" | "year";
   priceField?:
     | "opt_price_min"
@@ -77,7 +87,6 @@ export const PriceChartPanel: React.FC<Props> = ({
     );
   }, [selectedItems]);
 
-  // Очистка данных при удалении элементов
   useEffect(() => {
     setLoadedSeriesMap((prev) => {
       const newMap = new Map();
@@ -90,7 +99,6 @@ export const PriceChartPanel: React.FC<Props> = ({
     });
   }, [selectedKeys]);
 
-  // ЕДИНСТВЕННАЯ загрузка данных - только при нажатии кнопки (изменении buildKey)
   useEffect(() => {
     if (selectedItems.length === 0) {
       setLoadedSeriesMap(new Map());
@@ -144,7 +152,7 @@ export const PriceChartPanel: React.FC<Props> = ({
     };
 
     load();
-  }, [buildKey]); // ТОЛЬКО при изменении buildKey
+  }, [buildKey]);
 
   const datasets = Array.from(loadedSeriesMap.entries())
     .filter(([key]) => selectedKeys.includes(key))
@@ -172,9 +180,7 @@ export const PriceChartPanel: React.FC<Props> = ({
         display: true,
         font: { size: 30 },
         padding: { top: 20, bottom: 50 },
-        text: `Динамика цен за период с ${formatDateDisplay(
-          dateFrom
-        )} по ${formatDateDisplay(dateTo)}`,
+        text: `Динамика цен за период с ${dateFrom} по ${dateTo as Date}`,
       },
     },
     scales: {
