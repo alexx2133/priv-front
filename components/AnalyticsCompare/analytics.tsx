@@ -40,8 +40,8 @@ interface AnalyticsProps {
 // Пропсы которые получают все компоненты визуализации
 export interface VisualizationProps {
   selectedItems: Item[];
-  dateFrom: string | Date;
-  dateTo: string | Date;
+  dateFrom: string;
+  dateTo: string;
   period: "day" | "month" | "year";
   priceField:
     | "opt_price_min"
