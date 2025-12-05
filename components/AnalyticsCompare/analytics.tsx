@@ -30,14 +30,12 @@ type SelectedItem =
 
 const MAX_ITEMS = 4;
 
-// Пропсы для компонента аналитики
 interface AnalyticsProps {
   visualizationComponent: React.ComponentType<VisualizationProps>;
   title: string;
   icon: string;
 }
 
-// Пропсы которые получают все компоненты визуализации
 export interface VisualizationProps {
   selectedItems: Item[];
   dateFrom: string;
@@ -52,7 +50,6 @@ export interface VisualizationProps {
   buildKey: number;
 }
 
-// Основной компонент аналитики
 const Analytics: React.FC<AnalyticsProps> = ({
   visualizationComponent: VisualizationComponent,
   title,
@@ -195,7 +192,6 @@ const Analytics: React.FC<AnalyticsProps> = ({
         </div>
 
         <div className={styles.controls}>
-          {/* ... весь код панели управления без изменений ... */}
           <div className={styles.panel}>
             <div className={styles.panelCol}>
               <h3>Товары</h3>

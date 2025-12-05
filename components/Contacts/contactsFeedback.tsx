@@ -45,8 +45,6 @@ const ContactsFeedback = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-
-      // Проверка типов файлов
       const allowedTypes = [
         "image/jpeg",
         "image/png",
@@ -59,7 +57,6 @@ const ContactsFeedback = () => {
         allowedTypes.includes(file.type)
       );
 
-      // Проверка размера (макс 5MB)
       const sizeValidFiles = validFiles.filter(
         (file) => file.size <= 5 * 1024 * 1024
       );
@@ -135,7 +132,6 @@ const ContactsFeedback = () => {
         disabled={isLoading || timeLeft > 0}
       ></textarea>
 
-      {/* Поле для загрузки файлов */}
       <div className={style.fileUpload}>
         <input
           type="file"
@@ -159,7 +155,6 @@ const ContactsFeedback = () => {
         </div>
       </div>
 
-      {/* Список прикрепленных файлов */}
       {files.length > 0 && (
         <div className={style.fileList}>
           {files.map((file, index) => (

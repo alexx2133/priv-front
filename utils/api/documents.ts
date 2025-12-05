@@ -25,8 +25,6 @@ export const documentsService = {
   ): Promise<{ groups: DocumentGroup[] }> => {
     return api.get(`/documents/all-groups/with-documents?group=${groupType}`);
   },
-
-  // Скачать несколько документов
   downloadMultiple: (
     documentIds: number[],
     groupType: "customers" | "sellers"
@@ -46,8 +44,6 @@ export const documentsService = {
         window.URL.revokeObjectURL(url);
       });
   },
-
-  // Скачать один документ (ИСПРАВЛЕННАЯ ВЕРСИЯ)
   downloadSingle: (
     documentId: number,
     groupType: "customers" | "sellers"
@@ -57,8 +53,6 @@ export const documentsService = {
     )
       .then((response) => {
         if (!response.ok) throw new Error("Download failed");
-
-        // Получаем имя файла из заголовков Content-Disposition
         const contentDisposition = response.headers.get("Content-Disposition");
         let fileName = "document";
         if (contentDisposition) {
@@ -67,8 +61,6 @@ export const documentsService = {
             fileName = decodeURIComponent(fileNameMatch[1]);
           }
         }
-
-        // Возвращаем и blob и fileName
         return response.blob().then((blob) => ({ blob, fileName }));
       })
       .then(({ blob, fileName }) => {

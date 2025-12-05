@@ -25,8 +25,6 @@ const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
   objectFit = "cover",
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-
-  // Если нет src - не рендерим ничего
   if (!src) return null;
 
   return (

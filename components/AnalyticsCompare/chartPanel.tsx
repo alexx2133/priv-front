@@ -35,7 +35,7 @@ export const formatDateToYYYYMMDD = (date: Date | string | null) => {
   if (!date) return "";
 
   const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // месяцы начинаются с 0
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
 
   return `${year}-${month}-${day}`;
@@ -61,7 +61,7 @@ interface Props {
     | "rozn_price_min"
     | "rozn_price_max";
   apiBase?: string;
-  buildKey: number; // Добавляем пропс для кнопки обновления
+  buildKey: number;
 }
 
 export const PriceChartPanel: React.FC<Props> = ({
@@ -71,7 +71,7 @@ export const PriceChartPanel: React.FC<Props> = ({
   period = "day",
   priceField = "rozn_price_min",
   apiBase = "",
-  buildKey, // Ключ обновления от кнопки
+  buildKey,
 }) => {
   const [loadedSeriesMap, setLoadedSeriesMap] = useState<Map<string, Series>>(
     new Map()
@@ -163,7 +163,7 @@ export const PriceChartPanel: React.FC<Props> = ({
         label: s.label,
         data,
         borderColor: COLORS[idx % COLORS.length],
-        backgroundColor: "transparent",
+        backgroundColor: COLORS[idx % COLORS.length],
         tension: 0.08,
         pointRadius: 2,
       };
@@ -175,7 +175,19 @@ export const PriceChartPanel: React.FC<Props> = ({
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: "top" as const },
+      legend: {
+        position: "top" as const,
+        labels: {
+          font: {
+            size: 30,
+            weight: "bold" as const,
+          },
+          usePointStyle: true,
+          boxWidth: 50,
+          boxHeight: 50,
+          pointStyle: "rect" as const,
+        }
+      },
       title: {
         display: true,
         font: { size: 30 },

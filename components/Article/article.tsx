@@ -13,24 +13,19 @@ const Article = ({ banner, jobs }: { banner: any; jobs?: boolean }) => {
     if (!contentRef.current || !banner?.text) return;
 
     const updateHeight = () => {
-      // Получаем реальную высоту контента
       const height = contentRef.current?.scrollHeight || 0;
       console.log("Real content height:", height);
       setContentHeight(height);
     };
 
-    // Создаем observer для отслеживания изменений размера
     const resizeObserver = new ResizeObserver(updateHeight);
     resizeObserver.observe(contentRef.current);
-
-    // Также проверяем сразу
     updateHeight();
 
-    // Проверяем периодически на случай если контент загружается асинхронно
     const intervalId = setInterval(updateHeight, 300);
     const timeoutId = setTimeout(() => {
       clearInterval(intervalId);
-    }, 1000); // Перестаем проверять через 2 секунды
+    }, 1000); 
 
     return () => {
       resizeObserver.disconnect();

@@ -47,10 +47,8 @@ export const CompareTable: React.FC<CompareTableProps> = ({
     selectedItems: Item[];
   } | null>(null);
 
-  // Обработчик загрузки данных - вызывается только при изменении buildKey
   React.useEffect(() => {
     if (buildKey === 0) {
-      // Сброс состояния при первоначальной загрузке
       setData([]);
       setHasSearched(false);
       setSearchParams(null);
@@ -67,8 +65,6 @@ export const CompareTable: React.FC<CompareTableProps> = ({
       setLoading(true);
       setError(null);
       setHasSearched(true);
-
-      // Сохраняем параметры поиска для отображения
       setSearchParams({
         dateFrom,
         dateTo,
@@ -109,7 +105,7 @@ export const CompareTable: React.FC<CompareTableProps> = ({
     };
 
     loadComparison();
-  }, [buildKey]); // ТОЛЬКО buildKey как зависимость
+  }, [buildKey]); 
 
   const formatDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split("-");
@@ -136,7 +132,6 @@ export const CompareTable: React.FC<CompareTableProps> = ({
   const displayDateFrom = searchParams?.dateFrom || dateFrom;
   const displayDateTo = searchParams?.dateTo || dateTo;
 
-  // Показываем приглашение к поиску до первого нажатия кнопки
   if (!hasSearched && buildKey === 0) {
     return (
       <div className={styles.initialState}>

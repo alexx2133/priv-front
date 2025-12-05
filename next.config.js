@@ -1,27 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Базовые настройки
   reactStrictMode: true,
   compress: true,
-  poweredByHeader: false, // Добавляем для безопасности
+  poweredByHeader: false, 
   reactStrictMode: true,
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production", // Отключаем console в production
+    removeConsole: process.env.NODE_ENV === "production", 
   },
-  // В development показываем больше предупреждений
   onDemandEntries: {
     maxInactiveAge: 25 * 1000,
     pagesBufferLength: 2,
   },
-
-  // Оптимизация изображений
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
-
-    // Убираем дублирование domains, используем только remotePatterns
     remotePatterns: [
       {
         protocol: "http",
@@ -104,29 +98,19 @@ const nextConfig = {
     ],
   },
 
-  // TypeScript - лучше убрать ignoreBuildErrors на проде
   typescript: {
-    ignoreBuildErrors: process.env.NODE_ENV === "development", // Только в разработке
+    ignoreBuildErrors: process.env.NODE_ENV === "development",
   },
 
-  // Оптимизации компилятора
   compiler: {
-    // Удаляем console.log в продакшене
     removeConsole: process.env.NODE_ENV === "production",
   },
-
-  // Оптимизации для производства
   swcMinify: true,
-
-  // Включаем gzip сжатие
   compress: true,
-
-  // Оптимизация кеширования
   experimental: {
-    optimizeCss: true, // CSS оптимизация
+    optimizeCss: true, 
   },
 
-  // Заголовки для безопасности и кеширования
   async headers() {
     return [
       {

@@ -47,7 +47,6 @@ export const useFeedback = () => {
       formData.append("email", data.email);
       formData.append("message", data.message);
 
-      // Добавляем файлы
       files.forEach((file) => {
         formData.append("files", file);
       });
@@ -55,7 +54,6 @@ export const useFeedback = () => {
       const response = await fetch(API_URL + "/feedback", {
         method: "POST",
         body: formData,
-        // Не устанавливаем Content-Type - браузер сделает это сам с boundary
       });
 
       const result = await response.json();

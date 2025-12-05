@@ -7,8 +7,6 @@ const handleResponse = async (response: Response) => {
     const error = await response.text();
     throw new Error(error || `HTTP error! status: ${response.status}`);
   }
-
-  // Для скачивания файлов возвращаем blob
   const contentType = response.headers.get("content-type");
   if (
     contentType?.includes("application/zip") ||

@@ -90,7 +90,6 @@ export const useDocumentsStore = create<DocumentsState>((set, get) => ({
           ...new Set([...newSelectedDocuments, ...documentsToAdd]),
         ];
       } else {
-        // Убираем ВСЕ документы этого типа
         const documentsToRemove = allDocuments
           .filter((doc) => {
             switch (type) {
@@ -140,8 +139,6 @@ export const useDocumentsStore = create<DocumentsState>((set, get) => ({
       state.currentGroupType === "customers"
         ? state.customerGroups
         : state.sellerGroups;
-
-    // Выбираем ВСЕ документы без фильтрации
     const allDocumentIds = groups
       .flatMap((group) => group.documents)
       .map((doc) => doc.id);

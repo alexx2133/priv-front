@@ -34,7 +34,6 @@ const DocumentsSection = ({
 
   return (
     <div className={style.documents}>
-      {/* Заголовок с фильтрами (только для sellers) */}
       {documentType === "sellers" && (
         <div className={style.documents__header}>
           <div className={style.documents__header__items}>
@@ -72,7 +71,6 @@ const DocumentsSection = ({
         </div>
       )}
 
-      {/* Панель управления выбором */}
       <div className={style.documents__controls}>
         <div className={style.documents__selectionInfo}>
           Выбрано: {getSelectedDocumentsCount()} документов
@@ -92,8 +90,6 @@ const DocumentsSection = ({
           </button>
         </div>
       </div>
-
-      {/* Группы документов - ВСЕГДА ПОКАЗЫВАЕМ ВСЕ ДОКУМЕНТЫ */}
       {loading ? (
         <div className={style.loading}>Загрузка документов...</div>
       ) : (
@@ -130,7 +126,6 @@ const DocumentsSection = ({
   );
 };
 
-// Компонент группы документов - ПОКАЗЫВАЕМ ВСЕ ДОКУМЕНТЫ
 const DocumentGroup = ({
   group,
   selectedDocuments,
@@ -140,7 +135,6 @@ const DocumentGroup = ({
   selectedDocuments: number[];
   onToggleDocument: (id: number) => void;
 }) => {
-  // ВСЕГДА показываем ВСЕ документы группы
   return (
     <div className={style.documentGroup}>
       <h2 className={style.documentGroup__title}>{group.name}</h2>
@@ -158,7 +152,6 @@ const DocumentGroup = ({
   );
 };
 
-// Компонент карточки документа
 const DocumentCard = ({
   document,
   isSelected,
@@ -174,7 +167,6 @@ const DocumentCard = ({
     >
       <div className={style.documentCard__header}>
         <div className={style.documentCard__content}>
-          {/* Три точки для указания типов */}
           <div
             className={style.documentCard__dot}
             style={{
