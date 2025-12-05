@@ -113,16 +113,18 @@ const History = () => {
   }, []);
   return (
     <div className={style.history}>
-      {history.data.map((el, i) => (
-        <div className={style.history__row} key={i}>
-          <div className={style.history__year}>
-            <div>{el.year} </div>год
+      {history.data
+        .sort((a, b) => b.year - a.year)
+        .map((el, i) => (
+          <div className={style.history__row} key={i}>
+            <div className={style.history__year}>
+              <div>{el.year} </div>год
+            </div>
+            <div className={style.history__text}>
+              <HtmlViewer html={el.text} />
+            </div>
           </div>
-          <div className={style.history__text}>
-            <HtmlViewer html={el.text} />
-          </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };
