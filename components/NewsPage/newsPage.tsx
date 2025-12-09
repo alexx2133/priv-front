@@ -8,7 +8,6 @@ import { useAppStore } from "../../stores/app";
 import { useState } from "react";
 const NewsPage = ({ isArchive }: { isArchive: boolean }) => {
   const { settings } = useAppStore();
-  console.log(isArchive);
   return (
     <div className={style.news}>
       <Banner

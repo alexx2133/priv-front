@@ -14,9 +14,13 @@ const NavBlock = ({ image, path, text, gray, func }: INavBlock) => {
       <div
         className={style.nav__block}
         onClick={() => func && func()}
-        style={gray ? { filter: "grayscale(1)" } : {}}
+        style={!gray ? { boxShadow: "0px 0px 0px rgba(0, 0, 0, 0.1)", pointerEvents: "none" } : {}}
       >
-        <img src={image} alt={path}/>
+        <img
+          src={image}
+          alt={path}
+          style={gray ? { filter: "grayscale(1)" } : {}}
+        />
         <img
           alt="block arrow"
           src={"../../navigation/icon-header-arrow.png"}

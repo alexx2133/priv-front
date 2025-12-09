@@ -48,6 +48,7 @@ const GalleryPage = () => {
     <div className={style.news}>
       <Banner
         bg={settings.data.headers_gallery_photo?.data}
+        notactive={2}
         nav={[
           {
             text: "Смотреть фото",
@@ -57,7 +58,7 @@ const GalleryPage = () => {
           {
             text: "Смотреть видео",
             path: "/gallery/video",
-            image: "gallery/icon-video-gray.png",
+            image: "gallery/icon-video.png",
           },
         ]}
       />

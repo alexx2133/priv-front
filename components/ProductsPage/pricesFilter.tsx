@@ -41,7 +41,10 @@ const PricesFilter = ({
       </div>
       <div className={style.prices__search_select}>
         <CategorySelect
-          options={[{ id: null, name: "Все категории" }, ...categories.data.slice(0, -3)]}
+          options={[
+            { id: null, name: "Все категории" },
+            ...categories.data?.filter((c: any) => c.active == 1),
+          ]}
           placeholder="Выберите категорию"
           onSelect={(id) => setSelected(id as number)}
           width="280px"

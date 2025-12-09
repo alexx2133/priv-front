@@ -258,7 +258,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
                   options={[
                     { id: null, name: "Выберите категорию" },
                     { id: 9999, name: "Вce категории" },
-                    ...categoryOptions.slice(0, -3),
+                    ...categoryOptions?.filter((c: any) => c.active == 1),
                   ]}
                   onSelect={(n) => {
                     setSelectedCategoryId(n as number);

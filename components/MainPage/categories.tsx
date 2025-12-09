@@ -8,6 +8,7 @@ interface cat {
   image: string;
   name: string;
   id: number;
+  active?: number;
 }
 const Categories = () => {
   const { categories } = useAppStore();
@@ -95,10 +96,11 @@ const Categories = () => {
             href={`/products?category=${el.id}`}
             className={style.categories__block}
             style={{
-              pointerEvents: i > 8 || i == 5 || i == 6 ? "none" : "auto",
+              pointerEvents: el.active == 1 ? "auto" : "none",
             }}
             key={i}
           >
+            {console.log(el.active, "el.active")}
             <img
               className={style.categories__image}
               src={getCategoriesUrl(el.image)}
