@@ -100,7 +100,6 @@ const Categories = () => {
             }}
             key={i}
           >
-            {console.log(el.active, "el.active")}
             <img
               className={style.categories__image}
               src={getCategoriesUrl(el.image)}
