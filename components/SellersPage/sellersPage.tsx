@@ -181,14 +181,30 @@ const SellersPage = () => {
         </div>
         <CarPrices
           title="Тарифы аренды торгового места за сутки для торговли с автотранспорта:"
-          prices={[850, 1500, 2350, 4250, 6400]}
+          prices={[
+            settings.data?.sellers_day_rent_price_5?.data,
+            settings.data?.sellers_day_rent_price_6?.data,
+            settings.data?.sellers_day_rent_price_8?.data,
+            settings.data?.sellers_day_rent_price_12?.data,
+            settings.data?.sellers_day_rent_price_12plus?.data,
+          ]}
         />
-        <div className={style.sellers__title}>
+        {/* <div className={style.sellers__title}>
           <h1>
             Продавцы при въезде дополнительно оплачивают услугу «Ввоз товара на
             рынок»
           </h1>
-        </div>
+        </div> */}
+        <CarPrices
+          title="Cтоимость услуги «Ввоз товара на рынок» для суточной аренды:"
+          prices={[
+            settings.data?.sellers_day_import_price_5?.data,
+            settings.data?.sellers_day_import_price_6?.data,
+            settings.data?.sellers_day_import_price_8?.data,
+            settings.data?.sellers_day_import_price_12?.data,
+            settings.data?.sellers_day_import_price_12plus?.data,
+          ]}
+        />
         <div id="documents" />
         <Title title="Документы для скачивания" image="sellers/document.png" />
         <DocumentsSection documentType="sellers" />

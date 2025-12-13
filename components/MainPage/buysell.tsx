@@ -67,7 +67,7 @@ const BuySell = () => {
         </div>
         <div className={style.buysell__subtitle}>
           <img src={"main_page/buysell/customers.png"} alt="customers" />
-          <h2>Покупалели</h2>
+          <h2>Покупатели</h2>
         </div>
         <div className={style.buysell__col}>
           {buyInfo.map((el, i) => (

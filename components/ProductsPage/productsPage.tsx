@@ -94,7 +94,7 @@ const ProductsPage = () => {
         nav={[
           {
             text: "Скачать",
-            path: "#",
+            path: "",
             image: "prices/icon-pdf.png",
             func: downloadPriceList,
           },
