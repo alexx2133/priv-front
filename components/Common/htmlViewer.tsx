@@ -16,8 +16,11 @@ function HtmlViewer({ html, height }: { html: string; height?: number }) {
   return (
     <div
       className={"ql-editor" + " links"}
-      style={{ lineHeight: height ? height : "1", textAlign: "inherit" }}
-      dangerouslySetInnerHTML={{ __html: sanitized}}
+      style={{
+        lineHeight: height ? height : "1",
+        textAlign: "inherit",
+      }}
+      dangerouslySetInnerHTML={{ __html: sanitized }}
     />
   );
 }

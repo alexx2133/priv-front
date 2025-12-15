@@ -12,36 +12,36 @@ import Lab from "../SellersPage/lab";
 import { useAppStore } from "../../stores/app";
 import { useEffect } from "react";
 import DocumentsSection from "../Documents/documentsSection";
-const notFarmInfo: IRent[] = [
-  {
-    image: "sellers/infrastructure/lab.png",
-    title: "Ветеринарно-санитарная лаборатория",
-  },
-  {
-    image: "sellers/infrastructure/weight.png",
-    title: "Контрольные весы",
-  },
-  {
-    image: "sellers/infrastructure/cafe.png",
-    title: "Кафе",
-  },
-  {
-    image: "sellers/infrastructure/wc.png",
-    title: "Туалет",
-  },
-  {
-    image: "sellers/infrastructure/shower.png",
-    title: "Душ",
-  },
-  {
-    image: "sellers/infrastructure/cam.png",
-    title: "Видеонаблюдение",
-  },
-  {
-    image: "sellers/infrastructure/loud.png",
-    title: "Сети громкой связи",
-  },
-];
+// const notFarmInfo: IRent[] = [
+//   {
+//     image: "sellers/infrastructure/lab.png",
+//     title: "Ветеринарно-санитарная лаборатория",
+//   },
+//   {
+//     image: "sellers/infrastructure/weight.png",
+//     title: "Контрольные весы",
+//   },
+//   {
+//     image: "sellers/infrastructure/cafe.png",
+//     title: "Кафе",
+//   },
+//   {
+//     image: "sellers/infrastructure/wc.png",
+//     title: "Туалет",
+//   },
+//   {
+//     image: "sellers/infrastructure/shower.png",
+//     title: "Душ",
+//   },
+//   {
+//     image: "sellers/infrastructure/cam.png",
+//     title: "Видеонаблюдение",
+//   },
+//   {
+//     image: "sellers/infrastructure/loud.png",
+//     title: "Сети громкой связи",
+//   },
+// ];
 
 export interface IRent {
   image: string;
@@ -123,11 +123,13 @@ const CustomersPage = () => {
         <Title title="Документы для скачивания" image="sellers/document.png" />
         <DocumentsSection documentType="customers" />
         <Title image={"about/schema.png"} title={"Cхема рынка"} />
+        <div id="schema" />
         <InteractiveMap />
         <Title
           image={"sellers/laboratory.png"}
           title={"Ветеринарно-санитарная лаборатория"}
         />
+        <div id="lab" />
         <Lab />
       </div>{" "}
     </div>

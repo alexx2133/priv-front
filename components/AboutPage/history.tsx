@@ -113,15 +113,17 @@ const History = () => {
   }, []);
   return (
     <div className={style.history}>
-      {history.data
-        .sort((a, b) => b.year - a.year)
-        .map((el, i) => (
+      {history?.data
+        ?.slice()
+        ?.reverse()
+        ?.sort((a, b) => b.year - a.year)
+        ?.map((el, i) => (
           <div className={style.history__row} key={i}>
             <div className={style.history__year}>
               <div>{el.year} </div>год
             </div>
             <div className={style.history__text}>
-              <HtmlViewer html={el.text} />
+              <HtmlViewer html={el.text} height={1.3} />
             </div>
           </div>
         ))}

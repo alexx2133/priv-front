@@ -20,7 +20,7 @@ export default function InteractiveMap() {
   const touchStartRef = useRef<TouchPoint[]>([]);
   const isPinchingRef = useRef(false);
 
-  const minScale = 1;
+  const minScale = 0.8;
   const maxScale = 3;
   const zoom = useCallback(
     (direction: "in" | "out") => {
@@ -34,7 +34,7 @@ export default function InteractiveMap() {
           : Math.max(scale - 0.2, minScale);
 
       if (newScale === scale) return;
-      if (newScale <= 1) {
+      if (newScale == 1) {
         setScale(1);
         setPosition({ x: 0, y: 0 });
         hasBeenDraggedRef.current = false;
@@ -215,8 +215,6 @@ export default function InteractiveMap() {
         if (constrainedX !== 0 || constrainedY !== 0) {
           hasBeenDraggedRef.current = true;
         }
-      } else {
-        setPosition({ x: 0, y: 0 });
       }
     },
     [scale]
