@@ -117,7 +117,6 @@
 .priceCell {
   padding: 14px 12px;
   text-align: right;
-  font-family: "Roboto Mono", monospace;
   font-weight: 500;
   color: #495057;
   grid-area: price;
@@ -130,7 +129,6 @@
 .diffCell {
   padding: 14px 12px;
   text-align: right;
-  font-family: "Roboto Mono", monospace;
   font-weight: 600;
   grid-area: diff;
   &:last-child {

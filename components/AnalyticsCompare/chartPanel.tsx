@@ -192,7 +192,7 @@ export const PriceChartPanel: React.FC<Props> = ({
         display: true,
         font: { size: 30 },
         padding: { top: 20, bottom: 50 },
-        text: `Динамика цен за период с ${dateFrom} по ${dateTo as Date}`,
+        text: `Динамика цен за период с ${formatDateDisplay(dateFrom.toString())} по ${formatDateDisplay(dateTo.toString())}`,
       },
     },
     scales: {
