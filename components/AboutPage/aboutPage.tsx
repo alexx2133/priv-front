@@ -13,6 +13,7 @@ const AboutPage = () => {
     <div className={style.about}>
       <Banner
         bg={settings.data?.headers_about?.data}
+        margin
         nav={[
           {
             text: "История рынка",

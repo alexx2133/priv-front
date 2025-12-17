@@ -49,6 +49,7 @@ const GalleryPage = () => {
       <Banner
         bg={settings.data.headers_gallery_photo?.data}
         notactive={2}
+        margin
         nav={[
           {
             text: "Смотреть фото",

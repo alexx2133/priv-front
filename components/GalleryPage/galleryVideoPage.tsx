@@ -22,6 +22,7 @@ const GalleryVideoPage = () => {
       <Banner
         bg={settings.data?.headers_gallery_video?.data}
         notactive={1}
+        margin
         nav={[
           {
             text: "Смотреть фото",

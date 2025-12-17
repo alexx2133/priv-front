@@ -13,6 +13,7 @@ const ContactsPage = () => {
     <div className={style.contacts}>
       <Banner
         bg={settings.data?.headers_contacts?.data}
+        margin
         nav={[
           {
             text: "Архив новостей",

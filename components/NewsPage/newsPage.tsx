@@ -13,6 +13,7 @@ const NewsPage = ({ isArchive }: { isArchive: boolean }) => {
       <Banner
         bg={settings.data?.headers_news?.data}
         notactive={isArchive ? 2 : 1}
+        margin
         nav={[
           {
             text: "Архив новостей",

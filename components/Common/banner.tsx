@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 interface IBanner {
   bg: string;
   notactive?: number;
+  margin?: boolean;
   nav: {
     text: string;
     path: string;
@@ -15,7 +16,7 @@ interface IBanner {
     image: string;
   }[];
 }
-const Banner = ({ bg, nav, notactive }: IBanner) => {
+const Banner = ({ bg, nav, notactive, margin }: IBanner) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   useEffect(() => {
     handleResize();
@@ -30,7 +31,10 @@ const Banner = ({ bg, nav, notactive }: IBanner) => {
   };
   if (!bg || bg?.includes("undefined")) return <div />;
   return (
-    <div className={style.banner}>
+    <div
+      className={style.banner}
+      style={{ marginBottom: margin ? "55px" : "0px" }}
+    >
       <div className={style.banner__bg}>
         <ProgressiveImage
           width={dimensions.width}
