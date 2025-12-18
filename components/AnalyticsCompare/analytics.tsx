@@ -84,7 +84,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
   );
 
   const [period, setPeriod] = useState<"day" | "month" | "year">("day");
-  const [priceType, setPriceType] = useState<"opt" | "rozn">("rozn");
+  const [priceType, setPriceType] = useState<"opt" | "rozn">("opt");
   const [priceExtreme, setPriceExtreme] = useState<"min" | "max">("min");
   const [priceField, setPriceField] = useState<
     "opt_price_min" | "opt_price_max" | "rozn_price_min" | "rozn_price_max"
