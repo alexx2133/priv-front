@@ -167,6 +167,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
       <Banner
         bg={settings.data?.headers_products?.data}
         notactive={title === "Динамика" ? 2 : 1}
+        margin
         nav={[
           {
             text: "Динамика",

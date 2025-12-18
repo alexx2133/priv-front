@@ -2,7 +2,7 @@
 .compareTable {
   background: white;
   //   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  margin: 24px 0;
+  margin: 21px 0;
   overflow: hidden;
   @media (max-width: 650px) {
     thead {
@@ -13,6 +13,10 @@
 .tableHeader {
   font-size: 30px;
   padding-bottom: 30px;
+  font-weight: normal;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
 }
 // .tableHeader {
 //   padding: 20px 24px;

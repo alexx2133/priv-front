@@ -25,6 +25,8 @@ ChartJS.register(
   Legend
 );
 
+ChartJS.defaults.color = "#212529";
+ChartJS.defaults.font.family = "Roboto";
 export const formatDateDisplay = (dateStr: string): string => {
   console.log(dateStr);
   const [year, month, day] = dateStr.split("-");
@@ -180,19 +182,24 @@ export const PriceChartPanel: React.FC<Props> = ({
         labels: {
           font: {
             size: 30,
-            weight: "bold" as const,
+            weight: "normal",
           },
           usePointStyle: true,
           boxWidth: 50,
           boxHeight: 50,
           pointStyle: "rect" as const,
-        }
+        },
       },
       title: {
         display: true,
-        font: { size: 30 },
+        font: {
+          size: 30,
+          weight: "normal",
+        },
         padding: { top: 20, bottom: 50 },
-        text: `Динамика цен за период с ${formatDateDisplay(dateFrom.toString())} по ${formatDateDisplay(dateTo.toString())}`,
+        text: `Динамика цен за период с ${formatDateDisplay(
+          dateFrom.toString()
+        )} по ${formatDateDisplay(dateTo.toString())}`,
       },
     },
     scales: {

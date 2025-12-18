@@ -180,7 +180,7 @@ export const CompareTable: React.FC<CompareTableProps> = ({
   return (
     <div className={styles.compareTable}>
       <div className={styles.tableHeader}>
-        Сравнение цен за период {formatDate(displayDateFrom as string)} →{" "}
+        Сравнение цен в период с {formatDate(displayDateFrom as string)} по {" "}
         {formatDate(displayDateTo)}
       </div>
 
