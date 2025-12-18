@@ -47,6 +47,7 @@ export const info: IInfo[] = [
   {
     image: "/sellers/seller-card-1.png",
     link: { to: "#documents", title: "Документы" },
+    small: true,
     descr: ["Правила", "План-схема", "Справки", "Требования"],
   },
   {

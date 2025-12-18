@@ -18,6 +18,7 @@ interface Product {
 
 interface ProductsState {
   data: Product[];
+  dataFiltered: Product[];
   loaded: boolean;
   selectedCategoryId: number | null;
   searchQuery: string;
@@ -37,6 +38,7 @@ interface ProductsState {
 
 export const useProductsStore = create<ProductsState>((set, get) => ({
   data: [],
+  dataFiltered: [],
   loaded: false,
   selectedCategoryId: null,
   searchQuery: "",
@@ -61,7 +63,8 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
       );
 
       set({
-        data: productsWithPrice,
+        data: data.products,
+        dataFiltered: productsWithPrice,
         loaded: true,
       });
     } catch (error) {
@@ -82,9 +85,7 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
   },
   downloadPriceList: async (): Promise<void> => {
     try {
-      const response = await fetch(
-        API_URL + "/products/download/price-list"
-      );
+      const response = await fetch(API_URL + "/products/download/price-list");
 
       if (!response.ok) {
         throw new Error("Failed to download price list");
@@ -145,7 +146,7 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
 
   getFilteredProducts: () => {
     const state = get();
-    let filtered = state.data;
+    let filtered = state.dataFiltered;
     if (state.selectedCategoryId) {
       filtered = filtered.filter(
         (product) => product.category_id === state.selectedCategoryId

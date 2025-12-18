@@ -44,24 +44,29 @@ const BannerMain = () => {
   return (
     <section
       className={style.banner}
-      style={
-        {
-          // backgroundColor: "#F6FFFE",
-          // backgroundImage: `url(${getSettingsUrl(
-          //   settings.data.headers_home?.data
-          // )})`,
-        }
-      }
+      style={{
+        // backgroundColor: "#F6FFFE",
+        backgroundImage: `url(${getSettingsUrl(
+          settings.data.headers_home?.data
+        )})`,
+      }}
     >
-      <div className={style.banner__bg}>
-        <ProgressiveImage
+      {/* <div
+        className={style.banner__bg}
+        style={{
+          backgroundImage: `url(${getSettingsUrl(
+            settings.data.headers_home?.data
+          )})`,
+        }}
+      > */}
+      {/* <ProgressiveImage
           width={dimensions.width}
           height={4070}
           absolute
           src={getSettingsUrl(settings.data.headers_home?.data)}
           alt="bg"
-        />
-      </div>
+        /> */}
+      {/* </div> */}
       <div className={style.banner__bg_images}>
         <div
           style={{
@@ -90,7 +95,9 @@ const BannerMain = () => {
           />
         </div>
       </div>
-      <Slider slides={mainBanners.data} />
+      <div className={style.banner__slide}>
+        <Slider slides={mainBanners.data} />
+      </div>
       <div className={style.banner__info}>
         <Info info={info} />
       </div>

@@ -27,6 +27,14 @@
       transform: translateX(-30px) translateY(-20px);
     }
   }
+  .small {
+    width: 256px;
+    object-position: 0 90px;
+    @media (max-width: 1100px) {
+      width: auto;
+      object-position: 0 -10px;
+    }
+  }
   .info__link {
     display: flex;
     align-items: center;
