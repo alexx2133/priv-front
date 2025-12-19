@@ -74,16 +74,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 15px 20px;
+  margin-top: 20px;
+  margin-bottom: 80px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .documents__selectionInfo {
-  font-weight: 600;
-  color: #007bff;
+  font-weight: 500;
+  font-size: 24px;
 }
 
 .documents__controlButtons {
@@ -94,10 +93,10 @@
     padding: 8px 16px;
     border: 1px solid #ddd;
     background: white;
-    border-radius: 6px;
+    border-radius: 100px;
     cursor: pointer;
     transition: all 0.2s;
-
+    font-size: 16px;
     &:hover:not(:disabled) {
       background: #f8f9fa;
     }
