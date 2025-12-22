@@ -162,7 +162,7 @@ export const PriceChartPanel: React.FC<Props> = ({
       if (!s.history || s.history.length === 0) return null;
       const data = s.history.map((p) => ({ x: p.date, y: p.price }));
       return {
-        label: s.label,
+        label: s.label == "All categories" ? "Все категории" : s.label,
         data,
         borderColor: COLORS[idx % COLORS.length],
         backgroundColor: COLORS[idx % COLORS.length],
