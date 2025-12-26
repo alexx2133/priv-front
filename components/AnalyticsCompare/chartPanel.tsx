@@ -1,5 +1,5 @@
 // components/PriceChartPanel.tsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
 import {
@@ -27,11 +27,13 @@ ChartJS.register(
 
 ChartJS.defaults.color = "#212529";
 ChartJS.defaults.font.family = "Roboto";
+
 export const formatDateDisplay = (dateStr: string): string => {
   console.log(dateStr);
   const [year, month, day] = dateStr.split("-");
   return `${day}.${month}.${year}`;
 };
+
 export const formatDateToYYYYMMDD = (date: Date | string | null) => {
   if (typeof date === "string") return date;
   if (!date) return "";
@@ -42,6 +44,7 @@ export const formatDateToYYYYMMDD = (date: Date | string | null) => {
 
   return `${year}-${month}-${day}`;
 };
+
 export type Item = { productId?: number; categoryId?: number };
 type Series = {
   type: "product" | "category";
@@ -80,6 +83,7 @@ export const PriceChartPanel: React.FC<Props> = ({
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const chartInstanceRef = useRef<any>(null);
 
   const selectedKeys = useMemo(() => {
     return selectedItems.map((it) =>
@@ -156,74 +160,146 @@ export const PriceChartPanel: React.FC<Props> = ({
     load();
   }, [buildKey]);
 
-  const datasets = Array.from(loadedSeriesMap.entries())
-    .filter(([key]) => selectedKeys.includes(key))
-    .map(([key, s], idx) => {
-      if (!s.history || s.history.length === 0) return null;
-      const data = s.history.map((p) => ({ x: p.date, y: p.price }));
-      return {
-        label: s.label == "All categories" ? "Все категории" : s.label,
-        data,
-        borderColor: COLORS[idx % COLORS.length],
-        backgroundColor: COLORS[idx % COLORS.length],
-        tension: 0.08,
-        pointRadius: 2,
-      };
-    })
-    .filter(Boolean) as any[];
+  const datasets = useMemo(() => {
+    return Array.from(loadedSeriesMap.entries())
+      .filter(([key]) => selectedKeys.includes(key))
+      .map(([key, s], idx) => {
+        if (!s.history || s.history.length === 0) return null;
+
+        let dataToUse = s.history;
+        if (s.history.length > 1000) {
+          const step = Math.ceil(s.history.length / 1000);
+          dataToUse = s.history.filter((_, index) => index % step === 0);
+          if (
+            dataToUse[dataToUse.length - 1] !== s.history[s.history.length - 1]
+          ) {
+            dataToUse.push(s.history[s.history.length - 1]);
+          }
+        }
+
+        const data = dataToUse.map((p) => ({
+          x: p.date,
+          y: p.price === 0 ? NaN : p.price,
+        }));
+
+        return {
+          label: s.label == "All categories" ? "Все категории" : s.label,
+          data,
+          borderColor: COLORS[idx % COLORS.length],
+          backgroundColor: COLORS[idx % COLORS.length],
+          tension: 0.08,
+          pointRadius: 2,
+          animation: {
+            duration: 0,
+          },
+          hover: {
+            animationDuration: 0,
+          },
+        };
+      })
+      .filter(Boolean) as any[];
+  }, [loadedSeriesMap, selectedKeys]);
 
   const chartData = { datasets };
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "top" as const,
-        labels: {
+
+  const options = useMemo(
+    () => ({
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: {
+        duration: 0,
+      },
+      transitions: {
+        active: {
+          animation: {
+            duration: 0,
+          },
+        },
+      },
+      hover: {
+        animationDuration: 0,
+      },
+      responsiveAnimationDuration: 0,
+
+      plugins: {
+        legend: {
+          position: "top" as const,
+          labels: {
+            font: {
+              size: 30,
+              weight: "normal",
+            },
+            usePointStyle: true,
+            boxWidth: 50,
+            boxHeight: 50,
+            pointStyle: "rect" as const,
+          },
+        },
+        title: {
+          display: true,
           font: {
             size: 30,
             weight: "normal",
           },
-          usePointStyle: true,
-          boxWidth: 50,
-          boxHeight: 50,
-          pointStyle: "rect" as const,
+          padding: { top: 20, bottom: 50 },
+          text: `Динамика цен за период с ${formatDateDisplay(
+            dateFrom.toString()
+          )} по ${formatDateDisplay(dateTo.toString())}`,
         },
-      },
-      title: {
-        display: true,
-        font: {
-          size: 30,
-          weight: "normal",
-        },
-        padding: { top: 20, bottom: 50 },
-        text: `Динамика цен за период с ${formatDateDisplay(
-          dateFrom.toString()
-        )} по ${formatDateDisplay(dateTo.toString())}`,
-      },
-    },
-    scales: {
-      x: {
-        type: "time" as const,
-        time: {
-          unit:
-            period === "day" ? "day" : period === "month" ? "month" : "year",
-          tooltipFormat: "dd-MM-yyyy",
-        },
-        ticks: {
-          maxRotation: 40,
-          autoSkip: true,
-          maxTicksLimit: 30,
-          callback: (value: any) => {
-            const date = new Date(value);
-            return new Intl.DateTimeFormat("ru-RU", {}).format(date);
+        tooltip: {
+          animation: {
+            duration: 0,
           },
         },
       },
-      y: { beginAtZero: false },
-    },
-    spanGaps: false,
-  };
+      scales: {
+        x: {
+          type: "time" as const,
+          time: {
+            unit:
+              period === "day" ? "day" : period === "month" ? "month" : "year",
+            tooltipFormat: "dd-MM-yyyy",
+          },
+          ticks: {
+            maxRotation: 40,
+            autoSkip: true,
+            maxTicksLimit: 30,
+            callback: (value: any) => {
+              const date = new Date(value);
+              return new Intl.DateTimeFormat("ru-RU", {}).format(date);
+            },
+          },
+        },
+        y: {
+          beginAtZero: false,
+          ticks: {
+            animation: {
+              duration: 0,
+            },
+          },
+          grid: {
+            animation: {
+              duration: 0,
+            },
+          },
+        },
+      },
+      spanGaps: false,
+    }),
+    [dateFrom, dateTo, period]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (chartInstanceRef.current) {
+        try {
+          chartInstanceRef.current.destroy();
+        } catch (e) {
+        }
+        chartInstanceRef.current = null;
+      }
+    };
+  }, []);
 
   return (
     <div
@@ -249,8 +325,14 @@ export const PriceChartPanel: React.FC<Props> = ({
         </div>
       )}
       {!loading && !error && datasets.length > 0 && (
-        //@ts-ignore
-        <Line data={chartData} options={options} />
+        <Line
+          data={chartData}
+          //@ts-ignore
+          options={options}
+          ref={(ref) => {
+            chartInstanceRef.current = ref;
+          }}
+        />
       )}
     </div>
   );
