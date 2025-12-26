@@ -167,7 +167,7 @@ export const PriceChartPanel: React.FC<Props> = ({
         borderColor: COLORS[idx % COLORS.length],
         backgroundColor: COLORS[idx % COLORS.length],
         tension: 0.08,
-        pointRadius: 2,
+        pointRadius: 1.5,
       };
     })
     .filter(Boolean) as any[];
