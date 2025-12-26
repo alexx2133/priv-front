@@ -76,13 +76,13 @@ const Analytics: React.FC<AnalyticsProps> = ({
     d.setFullYear(d.getFullYear() - 1);
     return d.toISOString().slice(0, 10);
   });
-
+  const [formatDateFrom, setFormatDateFrom] = useState(new Date(dateFrom));
   const [openTo, setOpenTo] = useState(false);
   const [openFrom, setOpenFrom] = useState(false);
   const [dateTo, setDateTo] = useState<string>(() =>
     new Date().toISOString().slice(0, 10)
   );
-
+  const [formatDateTo, setFormatDateTo] = useState(new Date(dateTo));
   const [period, setPeriod] = useState<"day" | "month" | "year">("day");
   const [priceType, setPriceType] = useState<"opt" | "rozn">("opt");
   const [priceExtreme, setPriceExtreme] = useState<"min" | "max">("min");
@@ -319,14 +319,18 @@ const Analytics: React.FC<AnalyticsProps> = ({
                     onChange={(e) => setDateFrom(e.target.value)}
                   /> */}
                   <DatePicker
-                    selected={new Date(dateFrom)}
+                    selected={formatDateFrom}
                     onFocus={() => setOpenFrom(true)}
                     onBlur={() => setOpenFrom(false)}
                     maxDate={new Date(Date.now())}
                     dateFormat={"dd.MM.yyyy"}
                     className={styles.datepicker__input}
+                    onInputError={(e) => console.log(e)}
                     onChange={(date) => {
-                      setDateFrom(formatDateToYYYYMMDD(date as Date));
+                      if (date && !isNaN(date.getTime())) {
+                        setFormatDateFrom(date);
+                        setDateFrom(formatDateToYYYYMMDD(date as Date));
+                      }
                     }}
                   />
                   <span
@@ -348,15 +352,18 @@ const Analytics: React.FC<AnalyticsProps> = ({
                     onChange={(e) => setDateTo(e.target.value)}
                   /> */}
                   <DatePicker
-                    selected={new Date(dateTo)}
+                    selected={formatDateTo}
                     className={styles.datepicker__input}
                     onFocus={() => setOpenTo(true)}
                     onBlur={() => setOpenTo(false)}
                     maxDate={new Date(Date.now())}
                     dateFormat={"dd.MM.yyyy"}
-                    onChange={(date) =>
-                      setDateTo(formatDateToYYYYMMDD(date as Date))
-                    }
+                    onChange={(date) => {
+                      if (date && !isNaN(date.getTime())) {
+                        setFormatDateTo(date);
+                        setDateTo(formatDateToYYYYMMDD(date as Date));
+                      }
+                    }}
                   />
                   <span
                     className={`${select.arrow} ${openTo ? select.up : ""}`}
