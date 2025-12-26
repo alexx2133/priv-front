@@ -68,21 +68,20 @@ interface Props {
   buildKey: number;
 }
 
-// Функция для создания сегментов данных (группирует последовательные точки с ценой > 0)
-const createDataSegments = (history: { date: string; price: number }[]) => {
-  if (!history || history.length === 0) return [];
+// Функция для разбиения истории на сегменты с ценой > 0
+const createSegmentedData = (history: { date: string; price: number }[]) => {
+  const segments: { date: string; price: number }[][] = [];
+  let currentSegment: { date: string; price: number }[] = [];
   
-  const segments: { x: string; y: number }[][] = [];
-  let currentSegment: { x: string; y: number }[] = [];
-  
-  history.forEach((point, index) => {
+  history.forEach((point) => {
     if (point.price > 0) {
-      // Если цена > 0, добавляем в текущий сегмент
-      currentSegment.push({ x: point.date, y: point.price });
-    } else if (currentSegment.length > 0) {
-      // Если цена = 0 и текущий сегмент не пуст, завершаем сегмент
-      segments.push([...currentSegment]);
-      currentSegment = [];
+      currentSegment.push(point);
+    } else {
+      // Если встречаем цену 0 и текущий сегмент не пуст - завершаем его
+      if (currentSegment.length > 0) {
+        segments.push([...currentSegment]);
+        currentSegment = [];
+      }
     }
   });
   
@@ -184,34 +183,32 @@ export const PriceChartPanel: React.FC<Props> = ({
     load();
   }, [buildKey]);
 
-  // Создаем datasets с учетом разрывов при цене = 0
+  // Создаем datasets с разрывами при цене = 0
   const datasets = Array.from(loadedSeriesMap.entries())
     .filter(([key]) => selectedKeys.includes(key))
     .flatMap(([key, s], idx) => {
       if (!s.history || s.history.length === 0) return null;
       
-      // Создаем сегменты данных (группируем последовательные точки с ценой > 0)
-      const segments = createDataSegments(s.history);
-      
-      if (segments.length === 0) return null;
+      // Создаем сегменты (каждый сегмент - непрерывная последовательность с ценой > 0)
+      const segments = createSegmentedData(s.history);
       
       // Для каждого сегмента создаем отдельный dataset
-      return segments.map((segment, segmentIdx) => ({
-        label: segmentIdx === 0 
-          ? (s.label == "All categories" ? "Все категории" : s.label)
-          : undefined, // Показываем label только для первого сегмента
-        data: segment,
-        borderColor: COLORS[idx % COLORS.length],
-        backgroundColor: COLORS[idx % COLORS.length],
-        tension: 0.08,
-        pointRadius: 3,
-        pointHoverRadius: 5,
-        borderWidth: 2,
-        fill: false,
-        segment: {
-          borderDash: segmentIdx > 0 ? [5, 5] : undefined, // Можно сделать пунктир для продолжения
-        },
-      }));
+      return segments.map((segment, segmentIdx) => {
+        const data = segment.map(p => ({ x: p.date, y: p.price }));
+        
+        return {
+          label: segmentIdx === 0 
+            ? (s.label === "All categories" ? "Все категории" : s.label)
+            : `_hidden_${key}_${segmentIdx}`, // Скрываем label для дополнительных сегментов
+          data,
+          borderColor: COLORS[idx % COLORS.length],
+          backgroundColor: COLORS[idx % COLORS.length],
+          tension: 0.08,
+          pointRadius: 3,
+          borderWidth: 2,
+          fill: false,
+        };
+      });
     })
     .filter(Boolean) as any[];
 
@@ -232,11 +229,9 @@ export const PriceChartPanel: React.FC<Props> = ({
           boxWidth: 50,
           boxHeight: 50,
           pointStyle: "rect" as const,
-          filter: (legendItem: any, chartData: any) => {
-            // Фильтруем дубликаты label (скрываем label для дополнительных сегментов)
-            const labels = chartData.datasets.map((d: any) => d.label);
-            const firstIndex = labels.indexOf(legendItem.text);
-            return legendItem.datasetIndex === firstIndex;
+          filter: (legendItem: any) => {
+            // Фильтруем скрытые сегменты (те, что начинаются с "_hidden_")
+            return !legendItem.text.startsWith('_hidden_');
           },
         },
       },
@@ -253,15 +248,20 @@ export const PriceChartPanel: React.FC<Props> = ({
       },
       tooltip: {
         callbacks: {
+          title: (tooltipItems: any[]) => {
+            // Форматируем дату в тултипе
+            const date = new Date(tooltipItems[0].parsed.x);
+            return new Intl.DateTimeFormat('ru-RU', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric'
+            }).format(date);
+          },
           label: (context: any) => {
-            let label = context.dataset.label || '';
-            if (label) {
-              label += ': ';
-            }
-            if (context.parsed.y !== null) {
-              label += `${context.parsed.y} ₽`;
-            }
-            return label;
+            const label = context.dataset.label.startsWith('_hidden_') 
+              ? context.dataset.label.replace(/^_hidden_[^_]+_/, '') 
+              : context.dataset.label;
+            return `${label}: ${context.parsed.y} ₽`;
           }
         }
       },
@@ -272,7 +272,7 @@ export const PriceChartPanel: React.FC<Props> = ({
         time: {
           unit:
             period === "day" ? "day" : period === "month" ? "month" : "year",
-          tooltipFormat: "dd-MM-yyyy",
+          tooltipFormat: "dd.MM.yyyy",
         },
         ticks: {
           maxRotation: 40,
@@ -298,18 +298,6 @@ export const PriceChartPanel: React.FC<Props> = ({
           color: "rgba(0, 0, 0, 0.1)",
         },
       },
-    },
-    // Отключаем соединение точек через разрывы
-    spanGaps: false,
-    elements: {
-      line: {
-        // Настройки линии
-        tension: 0.08
-      },
-      point: {
-        radius: 3,
-        hoverRadius: 5
-      }
     },
   };
 
