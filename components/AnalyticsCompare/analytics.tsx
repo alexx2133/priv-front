@@ -325,9 +325,9 @@ const Analytics: React.FC<AnalyticsProps> = ({
                     maxDate={new Date(Date.now())}
                     dateFormat={"dd.MM.yyyy"}
                     className={styles.datepicker__input}
-                    onChange={(date) =>
-                      setDateFrom(formatDateToYYYYMMDD(date as Date))
-                    }
+                    onChange={(date) => {
+                      setDateFrom(formatDateToYYYYMMDD(date as Date));
+                    }}
                   />
                   <span
                     className={`${select.arrow} ${openFrom ? select.up : ""}`}

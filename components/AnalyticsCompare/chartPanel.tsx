@@ -27,83 +27,21 @@ ChartJS.register(
 
 ChartJS.defaults.color = "#212529";
 ChartJS.defaults.font.family = "Roboto";
-
-// Функция для безопасного преобразования даты
-export const formatDateDisplay = (dateStr: string | Date): string => {
-  try {
-    if (!dateStr) return '';
-    
-    let dateObj: Date;
-    
-    if (typeof dateStr === 'string') {
-      // Проверяем формат YYYY-MM-DD
-      if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-        const [year, month, day] = dateStr.split("-");
-        return `${day}.${month}.${year}`;
-      }
-      
-      // Пытаемся создать Date из строки
-      dateObj = new Date(dateStr);
-    } else {
-      dateObj = dateStr;
-    }
-    
-    // Проверяем, валидна ли дата
-    if (isNaN(dateObj.getTime())) {
-      console.warn("Invalid date:", dateStr);
-      return '';
-    }
-    
-    const day = String(dateObj.getDate()).padStart(2, "0");
-    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-    const year = dateObj.getFullYear();
-    
-    return `${day}.${month}.${year}`;
-  } catch (error) {
-    console.error("Error formatting date:", error, dateStr);
-    return '';
-  }
+export const formatDateDisplay = (dateStr: string): string => {
+  console.log(dateStr);
+  const [year, month, day] = dateStr.split("-");
+  return `${day}.${month}.${year}`;
 };
+export const formatDateToYYYYMMDD = (date: Date | string | null) => {
+  if (typeof date === "string") return date;
+  if (!date) return "";
 
-// Функция для преобразования даты в формат YYYY-MM-DD
-export const formatDateToYYYYMMDD = (date: Date | string | null): string => {
-  if (!date) return '';
-  
-  if (typeof date === 'string') {
-    // Если строка уже в формате YYYY-MM-DD, возвращаем как есть
-    if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-      return date;
-    }
-    
-    // Пытаемся распарсить строку
-    const dateObj = new Date(date);
-    if (isNaN(dateObj.getTime())) {
-      console.warn("Invalid date string:", date);
-      return '';
-    }
-    
-    date = dateObj;
-  }
-  
   const day = String(date.getDate()).padStart(2, "0");
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
-  
+
   return `${year}-${month}-${day}`;
 };
-
-// Функция для безопасного парсинга даты для Chart.js
-const parseDateForChart = (dateStr: string): Date | null => {
-  try {
-    // Chart.js хорошо работает с ISO строками
-    const date = new Date(dateStr);
-    return isNaN(date.getTime()) ? null : date;
-  } catch (error) {
-    console.warn("Failed to parse date for chart:", dateStr, error);
-    return null;
-  }
-};
-
 export type Item = { productId?: number; categoryId?: number };
 type Series = {
   type: "product" | "category";
@@ -173,20 +111,10 @@ export const PriceChartPanel: React.FC<Props> = ({
       setLoading(true);
       setError(null);
       try {
-        // Форматируем даты для запроса
-        const dateFromFormatted = formatDateToYYYYMMDD(dateFrom);
-        const dateToFormatted = formatDateToYYYYMMDD(dateTo);
-        
-        if (!dateFromFormatted || !dateToFormatted) {
-          setError("Некорректный формат дат");
-          setLoading(false);
-          return;
-        }
-
         const body = {
           items: selectedItems,
-          date_from: dateFromFormatted,
-          date_to: dateToFormatted,
+          date_from: dateFrom,
+          date_to: dateTo,
           period,
           price_field: priceField,
         };
@@ -219,7 +147,6 @@ export const PriceChartPanel: React.FC<Props> = ({
           return map;
         });
       } catch (err) {
-        console.error("Ошибка загрузки данных:", err);
         setError("Ошибка подключения");
       } finally {
         setLoading(false);
@@ -229,53 +156,24 @@ export const PriceChartPanel: React.FC<Props> = ({
     load();
   }, [buildKey]);
 
-  // Форматируем даты для заголовка
-  const dateFromFormatted = useMemo(() => formatDateDisplay(dateFrom), [dateFrom]);
-  const dateToFormatted = useMemo(() => formatDateDisplay(dateTo), [dateTo]);
+  const datasets = Array.from(loadedSeriesMap.entries())
+    .filter(([key]) => selectedKeys.includes(key))
+    .map(([key, s], idx) => {
+      if (!s.history || s.history.length === 0) return null;
+      const data = s.history.map((p) => ({ x: p.date, y: p.price }));
+      return {
+        label: s.label == "All categories" ? "Все категории" : s.label,
+        data,
+        borderColor: COLORS[idx % COLORS.length],
+        backgroundColor: COLORS[idx % COLORS.length],
+        tension: 0.08,
+        pointRadius: 2,
+      };
+    })
+    .filter(Boolean) as any[];
 
-  // Создаем datasets для графика
-  const datasets = useMemo(() => {
-    return Array.from(loadedSeriesMap.entries())
-      .filter(([key]) => selectedKeys.includes(key))
-      .map(([key, s], idx) => {
-        if (!s?.history || s.history.length === 0) return null;
-        
-        // Создаем данные для графика с безопасным парсингом дат
-        const data = s.history
-          .map((p) => {
-            const parsedDate = parseDateForChart(p.date);
-            if (!parsedDate) return null;
-            
-            return {
-              x: parsedDate,
-              y: p.price === 0 ? NaN : p.price // Используем NaN для создания разрывов
-            };
-          })
-          .filter((point): point is { x: Date; y: number } => point !== null);
-        
-        if (data.length === 0) return null;
-        
-        return {
-          label: s.label === "All categories" ? "Все категории" : s.label,
-          data,
-          borderColor: COLORS[idx % COLORS.length],
-          backgroundColor: COLORS[idx % COLORS.length],
-          borderWidth: 2,
-          pointRadius: 4,
-          pointHoverRadius: 6,
-          pointBackgroundColor: COLORS[idx % COLORS.length],
-          tension: 0.1,
-          fill: false,
-          // Chart.js автоматически создаст разрыв при NaN
-          spanGaps: false, // Важно: false для разрывов
-        };
-      })
-      .filter(Boolean) as any[];
-  }, [loadedSeriesMap, selectedKeys]);
-
-  const chartData = useMemo(() => ({ datasets }), [datasets]);
-
-  const options = useMemo(() => ({
+  const chartData = { datasets };
+  const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -283,106 +181,49 @@ export const PriceChartPanel: React.FC<Props> = ({
         position: "top" as const,
         labels: {
           font: {
-            size: 14,
+            size: 30,
             weight: "normal",
           },
           usePointStyle: true,
-          boxWidth: 40,
-          boxHeight: 20,
-          pointStyle: "circle" as const,
+          boxWidth: 50,
+          boxHeight: 50,
+          pointStyle: "rect" as const,
         },
       },
       title: {
         display: true,
         font: {
-          size: 16,
+          size: 30,
           weight: "normal",
         },
-        padding: { top: 10, bottom: 30 },
-        text: `Динамика цен за период с ${dateFromFormatted} по ${dateToFormatted}`,
-      },
-      tooltip: {
-        callbacks: {
-          label: (context: any) => {
-            let label = context.dataset.label || '';
-            if (label) {
-              label += ': ';
-            }
-            if (context.parsed.y !== null && !isNaN(context.parsed.y)) {
-              label += `${context.parsed.y} ₽`;
-            } else {
-              label += 'нет данных';
-            }
-            return label;
-          }
-        }
+        padding: { top: 20, bottom: 50 },
+        text: `Динамика цен за период с ${formatDateDisplay(
+          dateFrom.toString()
+        )} по ${formatDateDisplay(dateTo.toString())}`,
       },
     },
     scales: {
       x: {
         type: "time" as const,
         time: {
-          unit: period === "day" ? "day" : period === "month" ? "month" : "year",
-          tooltipFormat: "dd.MM.yyyy",
-          displayFormats: {
-            day: "dd.MM.yyyy",
-            month: "MMM yyyy",
-            year: "yyyy"
-          }
-        },
-        adapters: {
-          date: {
-            locale: "ru"
-          }
+          unit:
+            period === "day" ? "day" : period === "month" ? "month" : "year",
+          tooltipFormat: "dd-MM-yyyy",
         },
         ticks: {
-          maxRotation: 45,
+          maxRotation: 40,
           autoSkip: true,
-          maxTicksLimit: 20,
-          font: {
-            size: 12
-          }
-        },
-        grid: {
-          drawBorder: true,
-          color: "rgba(0, 0, 0, 0.1)",
+          maxTicksLimit: 30,
+          callback: (value: any) => {
+            const date = new Date(value);
+            return new Intl.DateTimeFormat("ru-RU", {}).format(date);
+          },
         },
       },
-      y: { 
-        beginAtZero: false,
-        ticks: {
-          callback: (value: any) => `${value} ₽`,
-          font: {
-            size: 12
-          }
-        },
-        grid: {
-          drawBorder: true,
-          color: "rgba(0, 0, 0, 0.1)",
-        },
-        title: {
-          display: true,
-          text: 'Цена (₽)',
-          font: {
-            size: 14
-          }
-        }
-      },
+      y: { beginAtZero: false },
     },
-    interaction: {
-      intersect: false,
-      mode: 'index' as const,
-    },
-    elements: {
-      point: {
-        radius: 4,
-        hoverRadius: 6
-      },
-      line: {
-        tension: 0.1
-      }
-    }
-  }), [dateFromFormatted, dateToFormatted, period]);
+    spanGaps: false,
+  };
 
   return (
     <div
@@ -390,7 +231,6 @@ export const PriceChartPanel: React.FC<Props> = ({
         width: "100%",
         height: datasets.length ? 820 : 220,
         marginBottom: 50,
-        position: "relative",
       }}
     >
       {loading && (
@@ -409,12 +249,8 @@ export const PriceChartPanel: React.FC<Props> = ({
         </div>
       )}
       {!loading && !error && datasets.length > 0 && (
-        <Line 
-          data={chartData} 
-          //@ts-ignore
-          options={options}
-          key={`chart-${buildKey}-${datasets.length}`} // Ключ для принудительного перерисовки
-        />
+        //@ts-ignore
+        <Line data={chartData} options={options} />
       )}
     </div>
   );
