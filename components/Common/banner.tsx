@@ -20,8 +20,14 @@ const Banner = ({ bg, nav, notactive, margin }: IBanner) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   useEffect(() => {
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleResize);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
+    };
   }, []);
   const handleResize = () => {
     setDimensions({

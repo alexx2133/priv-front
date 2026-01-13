@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles/scrollTop.module.scss";
 
 type Props = {
-  threshold?: number; 
-  right?: number; 
-  bottom?: number; 
-  size?: number; 
+  threshold?: number;
+  right?: number;
+  bottom?: number;
+  size?: number;
   className?: string;
 };
 
@@ -31,8 +31,9 @@ export default function ScrollToTop({
         ticking.current = false;
       });
     };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
     setVisible(
       typeof window !== "undefined" ? window.scrollY > threshold : false
     );
