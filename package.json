@@ -23,6 +23,7 @@
     "fetch": "^1.1.0",
     "jsx-runtime": "^1.2.0",
     "next": "^16.0.10",
+    "prop-types": "^15.8.1",
     "quill": "^2.0.3",
     "quill-blot-formatter": "^1.0.5",
     "react": "19.2.3",
