@@ -52,7 +52,7 @@ function MyApp(props: AppProps) {
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Крымский Привоз" />
         <meta property="og:locale" content="ru_RU" />
-        {/* <meta name="google-site-verification" content="ваш-google-код" /> */}
+        <meta name="google-site-verification" content="pnopbL-uDY0czjmn3OsCqzWtZaR9JOAjJigncuh8arI" />
         {/* <meta name="yandex-verification" content="ваш-yandex-код" /> */}
       </Head>
       <RouteTransitionHandler {...props} />
