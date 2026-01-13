@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import ym, { YMInitializer } from "react-yandex-metrika";
 
-const YM_COUNTER_ID = 12345678; 
+const YM_COUNTER_ID = 23471422; 
 
 const YandexMetrika = () => {
   const pathname = usePathname();
