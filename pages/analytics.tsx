@@ -23,7 +23,7 @@ const AnalyticsPage = () => {
           property="og:description"
           content="Графики и анализ изменения цен на продукты. Статистика цен на рынке Крымский Привоз за неделю, месяц, год."
         />
-        <meta property="og:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta property="og:image" content={`${FRONT_URL}/og-image.png`} />
         <meta property="og:url" content={`${FRONT_URL}/analytics`} />
         <meta property="og:type" content="website" />
 
@@ -39,7 +39,7 @@ const AnalyticsPage = () => {
           name="twitter:description"
           content="Графики и анализ изменения цен на продукты. Статистика цен на рынке Крымский Привоз за неделю, месяц, год."
         />
-        <meta name="twitter:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta name="twitter:image" content={`${FRONT_URL}/og-image.png`} />
         <link rel="canonical" href={`${FRONT_URL}/analytics`} />
       </Head>
       <Analytics

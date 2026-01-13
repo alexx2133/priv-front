@@ -31,7 +31,7 @@ const JobsPage = () => {
         />
         <meta
           property="og:image"
-          content={`${FRONT_URL}/og-image.jpg`}
+          content={`${FRONT_URL}/og-image.png`}
         />
         <meta property="og:url" content={`${FRONT_URL}/jobs`} />
         <meta property="og:type" content="website" />
@@ -47,7 +47,7 @@ const JobsPage = () => {
         />
         <meta
           name="twitter:image"
-          content={`${FRONT_URL}/og-image.jpg`}
+          content={`${FRONT_URL}/og-image.png`}
         />
         <link rel="canonical" href={`${FRONT_URL}/jobs`} />
       </Head>

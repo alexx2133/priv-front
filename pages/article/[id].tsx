@@ -39,7 +39,7 @@ const Header = ({ banner }: { banner: any }) => {
       <meta property="og:description" content={banner?.data?.text} />
       <meta
         property="og:image"
-        content={`https://privoz-crimea.ru/og-image.jpg`}
+        content={`https://privoz-crimea.ru/og-image.png`}
       />
       <meta
         property="og:url"

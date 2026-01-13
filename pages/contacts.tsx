@@ -32,7 +32,7 @@ const Contacts = () => {
           property="og:description"
           content="Контактная информация рынка Крымский Привоз в Симферополе. Адрес, телефоны, график работы. Схема проезда и форма обратной связи."
         />
-        <meta property="og:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta property="og:image" content={`${FRONT_URL}/og-image.png`} />
         <meta property="og:url" content={`${FRONT_URL}/contacts`} />
         <meta property="og:type" content="website" />
 
@@ -45,7 +45,7 @@ const Contacts = () => {
           name="twitter:description"
           content="Контактная информация рынка Крымский Привоз в Симферополе. Адрес, телефоны, график работы. Схема проезда и форма обратной связи."
         />
-        <meta name="twitter:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta name="twitter:image" content={`${FRONT_URL}/og-image.png`} />
         <link rel="canonical" href={`${FRONT_URL}/contacts`} />
       </Head>
       <ContactsPage />

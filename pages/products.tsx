@@ -21,7 +21,7 @@ const Products = () => {
           property="og:description"
           content="Актуальные цены на рынке Крымский Привоз. Обновления каждый день."
         />
-        <meta property="og:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta property="og:image" content={`${FRONT_URL}/og-image.png`} />
         <meta property="og:url" content={`${FRONT_URL}/products`} />
         <meta property="og:type" content="website" />
         <meta property="og:image:width" content="1200" />
@@ -32,7 +32,7 @@ const Products = () => {
           name="twitter:description"
           content="Цены на рынке Крымский Привоз в Симферополе."
         />
-        <meta name="twitter:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta name="twitter:image" content={`${FRONT_URL}/og-image.png`} />
         <link rel="canonical" href={`${FRONT_URL}/products`} />
       </Head>
       <ProductsPage />

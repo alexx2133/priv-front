@@ -23,7 +23,7 @@ const News = () => {
           property="og:description"
           content="Последние новости и события рынка Крымский Привоз в Симферополе. Изменения в графике работы, важные объявления для покупателей и продавцов."
         />
-        <meta property="og:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta property="og:image" content={`${FRONT_URL}/og-image.png`} />
         <meta property="og:url" content={`${FRONT_URL}/news`} />
         <meta property="og:type" content="website" />
 
@@ -36,7 +36,7 @@ const News = () => {
           name="twitter:description"
           content="Последние новости и события рынка Крымский Привоз в Симферополе. Изменения в графике работы, важные объявления для покупателей и продавцов"
         />
-        <meta name="twitter:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta name="twitter:image" content={`${FRONT_URL}/og-image.png`} />
         <link rel="canonical" href={`${FRONT_URL}/news`} />
       </Head>
       <NewsPage isArchive={false} />

@@ -25,7 +25,7 @@ const About = () => {
           property="og:description"
           content="История создания и развития рынка Крымский Привоз в Симферополе. Схема и панрама рынка."
         />
-        <meta property="og:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta property="og:image" content={`${FRONT_URL}/og-image.png`} />
         <meta property="og:url" content={FRONT_URL} />
         <meta property="og:type" content="website" />
 
@@ -41,7 +41,7 @@ const About = () => {
           name="twitter:description"
           content="История создания и развития рынка Крымский Привоз в Симферополе. Схема и панрама рынка."
         />
-        <meta name="twitter:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta name="twitter:image" content={`${FRONT_URL}/og-image.png`} />
         <link rel="canonical" href={`${FRONT_URL}/about`} />
       </Head>
 

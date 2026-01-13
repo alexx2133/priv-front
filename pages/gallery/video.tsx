@@ -25,7 +25,7 @@ const GalleryVideo = () => {
           property="og:description"
           content="Видеогалерея рынка Крымский Привоз: обзоры территории, интервью с продавцами, репортажи с мероприятий."
         />
-        <meta property="og:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta property="og:image" content={`${FRONT_URL}/og-image.png`} />
         <meta property="og:url" content={`${FRONT_URL}/gallery/video`} />
         <meta property="og:type" content="website" />
 
@@ -41,7 +41,7 @@ const GalleryVideo = () => {
           name="twitter:description"
           content="Видеогалерея рынка Крымский Привоз: обзоры территории, интервью с продавцами, репортажи с мероприятий."
         />
-        <meta name="twitter:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta name="twitter:image" content={`${FRONT_URL}/og-image.png`} />
         <link rel="canonical" href={`${FRONT_URL}/gallery/video`} />
       </Head>
       <GalleryVideoPage />

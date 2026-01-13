@@ -22,7 +22,7 @@ const Gallery = () => {
           property="og:description"
           content="Фотогалерея рынка Крымский Привоз: павильоны, торговые ряды, инфраструктура. Увидите как выглядит наш рынок."
         />
-        <meta property="og:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta property="og:image" content={`${FRONT_URL}/og-image.png`} />
         <meta property="og:url" content={`${FRONT_URL}/gallery`} />
         <meta property="og:type" content="website" />
 
@@ -38,7 +38,7 @@ const Gallery = () => {
           name="twitter:description"
           content="Фотогалерея рынка Крымский Привоз: павильоны, торговые ряды, инфраструктура. Увидите как выглядит наш рынок."
         />
-        <meta name="twitter:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta name="twitter:image" content={`${FRONT_URL}/og-image.png`} />
         <link rel="canonical" href={`${FRONT_URL}/gallery`} />
       </Head>
       <GalleryPage />

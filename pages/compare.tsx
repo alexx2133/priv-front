@@ -26,7 +26,7 @@ const ComparePage = () => {
           property="og:description"
           content="Сравнение цен на продукты на рынке Крымский Привоз с другими рынками Симферополя. Анализ изменения цен."
         />
-        <meta property="og:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta property="og:image" content={`${FRONT_URL}/og-image.png`} />
         <meta property="og:url" content={`${FRONT_URL}/compare`} />
         <meta property="og:type" content="website" />
 
@@ -42,7 +42,7 @@ const ComparePage = () => {
           name="twitter:description"
           content="Сравнение цен на продукты на рынке Крымский Привоз с другими рынками Симферополя. Анализ изменения цен."
         />
-        <meta name="twitter:image" content={`${FRONT_URL}/og-image.jpg`} />
+        <meta name="twitter:image" content={`${FRONT_URL}/og-image.png`} />
         <link rel="canonical" href={`${FRONT_URL}/compare`} />
       </Head>
       <Analytics
